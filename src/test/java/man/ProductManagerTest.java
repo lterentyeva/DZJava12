@@ -15,19 +15,21 @@ class ProductManagerTest {
     Product third = new Book(2, "Demons", 650, "Dostoevsky");
 
 
-
-
     @Test
     void shouldAddProduct() {
-        ProductManager manager = new ProductManager();
+        Repository repository = new Repository();
+        ProductManager manager = new ProductManager(repository);
 
+        manager.add(first);
         manager.add(second);
-        manager.add(third);
 
-        Product[] expected = {second, third};
-        Product[] actual = manager.getAll();
+
+        Product[] expected = {first, second};
+        Product[] actual = repository.findAll();
 
         assertArrayEquals(expected, actual);
+
+
     }
 
 
@@ -50,6 +52,7 @@ class ProductManagerTest {
     void shouldSearchByTextElse() {
         ProductManager manager = new ProductManager();
 
+
         manager.add(first);
         manager.add(second);
         manager.add(third);
@@ -60,7 +63,6 @@ class ProductManagerTest {
 
         assertArrayEquals(expected, actual);
     }
-
 
 
     @Test
