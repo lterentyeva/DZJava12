@@ -19,15 +19,6 @@ public class ProductManager {
         repository.save(product);
     }
 
-    public Product[] getAll() {
-        Product[] items = repository.findAll();
-        Product[] result = new Product[items.length];
-        for (int i = 0; i < result.length; i++) {
-            int index = items.length - i - 1;
-            result[i] = items[index];
-        }
-        return result;
-    }
 
     public Product[] searchBy(String text) {
         Product[] result = new Product[0];
@@ -44,9 +35,6 @@ public class ProductManager {
         return result;
     }
 
-    public void removeById(int id) {
-        repository.removeById(id);
-    }
 
     public boolean matches(Product product, String search) {
         if (product.getTitle().contains(search)) {
