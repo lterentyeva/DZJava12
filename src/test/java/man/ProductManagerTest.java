@@ -10,9 +10,11 @@ import repository.Repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductManagerTest {
-    Product first = new Book(1, "Idiot", 560, "Dostoevsky");
-    Product second = new Smartphone(3, "Samsung Note 9", 70000, "Samsung");
-    Product third = new Book(2, "Demons", 650, "Dostoevsky");
+    Product first = new Book(1, "War and peace", 560, "Tolstoy");
+    Product second = new Smartphone(2, "Samsung Note 10", 70000, "Samsung");
+    Product third = new Book(3, "Demons", 650, "Dostoevsky");
+    Product fourth = new Smartphone(4, "Samsung Note 20", 100000, "Samsung");
+
 
 
     @Test
@@ -40,10 +42,11 @@ class ProductManagerTest {
         manager.add(first);
         manager.add(second);
         manager.add(third);
+        manager.add(fourth);
 
 
-        Product[] expected = {second};
-        Product[] actual = manager.searchBy("Samsung");
+        Product[] expected = {third};
+        Product[] actual = manager.searchBy("Demons");
 
         assertArrayEquals(expected, actual);
     }
@@ -56,10 +59,11 @@ class ProductManagerTest {
         manager.add(first);
         manager.add(second);
         manager.add(third);
+        manager.add(fourth);
 
 
-        Product[] expected = {first, third};
-        Product[] actual = manager.searchBy("Dostoevsky");
+        Product[] expected = {second, fourth};
+        Product[] actual = manager.searchBy("Samsung");
 
         assertArrayEquals(expected, actual);
     }
@@ -72,11 +76,12 @@ class ProductManagerTest {
         repository.save(first);
         repository.save(second);
         repository.save(third);
+        repository.save(fourth);
 
         repository.removeById(1);
 
 
-        Product[] expected = {second, third};
+        Product[] expected = {second, third, fourth};
         Product[] actual = repository.findAll();
 
         assertArrayEquals(expected, actual);
@@ -87,7 +92,7 @@ class ProductManagerTest {
     void shouldFindMatches() {
         ProductManager manager = new ProductManager();
 
-        String text = "Idiot";
+        String text = "War and peace";
 
         Boolean expected = true;
         Boolean actual = manager.matches(first, text);
