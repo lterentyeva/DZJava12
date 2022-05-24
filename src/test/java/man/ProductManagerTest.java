@@ -5,6 +5,7 @@ import domain.Product;
 import domain.Smartphone;
 import manager.ProductManager;
 import org.junit.jupiter.api.Test;
+import repository.NotFoundException;
 import repository.Repository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -89,6 +90,20 @@ class ProductManagerTest {
 
 
     @Test
+    void shouldRemoveNotExistentProduct() {
+        Repository repository = new Repository();
+
+        repository.save(first);
+        repository.save(second);
+        repository.save(third);
+        repository.save(fourth);
+
+        assertThrows(NotFoundException.class, () -> {
+            repository.removeById(25);
+        });
+    }
+
+    @Test
     void shouldFindMatches() {
         ProductManager manager = new ProductManager();
 
@@ -100,4 +115,6 @@ class ProductManagerTest {
         assertEquals(expected, actual);
 
     }
+
+
 }
